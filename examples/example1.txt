@@ -1,0 +1,8 @@
+product p1=10 high,
+        p2=10 low;
+
+component c1, c2=10;
+
+c1 <- supplier;
+p1 <- c1 | c2;
+p2 <- c2;

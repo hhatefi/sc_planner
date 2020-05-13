@@ -1,0 +1,8 @@
+product p=20;
+component c1,c2;
+component c3, c4=20;
+
+p <- c1+c2;
+c1 <- c3+c4;
+c2 <- c4;
+c3<-supplier;

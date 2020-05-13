@@ -1,0 +1,7 @@
+product p=20;
+component c1,c2=10;
+
+p <- c1|c2;
+
+c1<-supplier;
+c2<-supplier;

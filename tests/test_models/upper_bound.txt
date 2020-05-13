@@ -1,0 +1,15 @@
+product p1=3, p2=8;
+
+component c1,c2,c3,c4;
+component c5=9,c6,c7;
+
+p1 <- c1+c2+c3;
+p2 <- c2|c3|c4;
+c4 <- c6;
+c3 <- c5+c6;
+c2 <- c7+c6;
+c1 <- c5|c6|c7;
+
+c5 <- c7|c6;
+c6 <- supplier;
+c7 <- supplier;

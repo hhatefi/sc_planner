@@ -1,0 +1,102 @@
+\documentclass[a4paper]{article}
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{mathtools}
+
+\newcommand{\nat}{\mathbb{N}}
+\newtheorem{problem}{Problem}
+\newtheorem{definition}{Definition}
+\newcommand{\pow}[1]{2^{#1}}
+\newcommand{\dotcup}{\mathbin{\dot{\cup}}}
+\newcommand{\ands}{\mathcal{A}}
+\newcommand{\ors}{\mathcal{O}}
+\newcommand{\SCP}{\textsl{SCP}}
+\newcommand{\SC}{\textsl{SC}}
+\newcommand{\chain}{\mathit{ch}}
+
+\begin{document}
+\author{Hassan Hatefi}
+\title{My thoughts on supply chain planning}
+\date{\today}
+\maketitle
+
+Here I document some thoughts on supply chain planning. I define the problem
+and formulate the mixed integer linear program that I used for solving the
+problem. At the end I briefly comment on its complexity. Before I start with
+the problem definition I introduce some notations that I use later.
+
+I refer to the power set of set $P$ as $\pow{P}$, which is the set of all
+subsets of $P$, i.e. $\{P'\mid P'\subseteq P\}$. I use $\dot{\cup}$ for
+disjoint union.
+
+I start with the definition of \emph{supply chain}.
+\begin{definition}[Supply Chain]\label{def:sc}
+  Let $P$ be a set of \emph{products} with $o:P\to\nat$ as its order
+  function such that $o(p)$ is the number of ordered product $p\in
+  P$. Moreover, $C$ is a set of \emph{components} with stock function
+  defined by $s:C\to\nat_0$. A product or a component is called
+  \emph{entity} and the set of all entities $\{P\dotcup C\}$ is
+  referred to as $E$. Let $C_s\subseteq C$ the component that are
+  directly supplied by a supplier. Each product or component is
+  chained to the network by function $\chain:E\to\pow{C}$. Then
+  $\SC=(E=\{P\dotcup C\},o,s,\chain,C_s)$ is a supply chain.
+\end{definition}
+Chain function $\chain$ specifies how an entity is connected to other entities
+in the chain. Formally speaking, entity $e$ is directly supplied by all
+entities in $\chain(e)$. The type of supply is recognized by partitioning
+entities into sets $\ands$ and $\ors$ corresponding \emph{and} and \emph{or}
+delivery, respectively. The set of entities that are suppied by entity $e$ is
+denoted by $\delta(e)$, i.e.~$\{e'\mid e\in\chain(e)\}$.
+
+Entities can flow through the chain down from suppliers and inventories as the
+source and be delivered as the products. An assignment of the flows to the
+chain that satisfies some constraints is called a \emph{plan}.
+
+\begin{definition}[Plan]\label{def:plan}
+  A \emph{plan} is an assignment of flows going out of suppliers ($s_c$ for
+  $c\in C_s$), going out of inventories ($v_c$ for $c\in C$), passing through
+  edges $y_{e,f}$ for all $e\in E$, for all $f\in\chain(e)$ and being delivered
+  as an entity ($x_e$ for $p\in P$) that satisfy the following constrains
+  \begin{align}
+    0\le x_p\le o(p),&\qquad\forall~p\in P\label{eq:prod}\\
+    0\le v_c\le s(c),&\qquad\forall~c\in C\\
+    x_e=y_{e,f},&\qquad\forall~e\in\ands, \forall~f\in\chain(e)\\
+    x_e\le
+    y_{e,f}+(1-z_{e,f})\bar{x}_{e},&\qquad\forall~e\in\ors.~\forall~f\in\chain(e)\label{eq:or:ub}\\
+    x_e\ge
+    y_{e,f}-(1-z_{e,f})\bar{x}_{e},&\qquad\forall~e\in\ors.~\forall~f\in\chain(e)\label{eq:or:lb}\\
+    \sum_{f\in\delta(c)}y_{c,f}=x_c+s_c+v_c,&\qquad\forall~c\in C_s\\
+    \sum_{f\in\delta(c)}y_{c,f}=x_c+v_c,&\qquad\forall~c\in C\setminus C_s\\
+    \sum_{f\in\chain(e)}z_{e,f}=1,&\qquad\forall~e\in\ors\\
+    z_{e,f}\in\{0,1\},&\qquad\forall~e\in\ors\\
+    s_c\ge 0,&\qquad\forall~c\in C_s\label{eq:src}
+  \end{align}
+\end{definition}
+In Ineqs.~\eqref{eq:or:ub} and~\eqref{eq:or:lb}, term $\bar{x}_e$ refers to
+any upper bound on the flow delivered to entity $e$. It can be easily computed
+by a bachward search through the chain.
+ 
+I define two problems related to supply chain. \emph{Supply Chain
+  Planning} problem is a decision problem to check whether a supply
+chain can satisfy its order.
+\begin{problem}[Supply Chain Planning (SCP)]\label{prob:scp}
+  Given a supply chain \SC{} as defined by Def.~\ref{def:sc}, \SCP{} decides
+  if there is a plan satisfying $x_p=o(p)$ for all $p\in P$.
+\end{problem}
+The optimization version of Prob.~\ref{prob:scp} is defined next.
+\begin{problem}[Maximal Supply Chain Plan~(MSCP)]\label{prob:mscp}
+  Given a supply chain \SC{} as defined by Def.~\ref{def:sc} and an affine
+  function $r$ on flow variables defined in described in
+  Def.~\ref{def:plan}, MSCP is the following optimization problem:
+  \begin{align*}
+    &\max~r(x,y,v,s)\\
+\mathrm{subject}\;\mathrm{to}&\\
+&\mathrm{constrains}~\eqref{eq:prod}~\mathrm{to}~\eqref{eq:src}
+  \end{align*}
+\end{problem}
+It is straightforward to prove Prob.~\ref{prob:scp} is NP-complete. One can
+easily encode subset sum problem as \SCP{} problem. I also think
+Prob.~\ref{prob:mscp} is NP-hard, but I have no proof for it.
+
+\end{document}

@@ -1,0 +1,7 @@
+product p1=50 high;
+component c1,c2;
+
+product p2=2;
+
+component c6=40;
+component c2=7;

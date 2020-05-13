@@ -1,0 +1,12 @@
+product p1=50 high;
+component c1,c2;
+
+product p2=2;
+
+component c6=40;
+component c7=7;
+p1 <- supplier;
+p1 <- c1 + c2;
+p3 <- c2;
+c7 <- c2+c6;
+
