@@ -17,20 +17,19 @@
 
 \begin{document}
 \author{Hassan Hatefi}
-\title{My thoughts on supply chain planning}
+\title{Supply Chain Planning}
 \date{\today}
 \maketitle
 
-Here I document some thoughts on supply chain planning. I define the problem
-and formulate the mixed integer linear program that I used for solving the
-problem. At the end I briefly comment on its complexity. Before I start with
-the problem definition I introduce some notations that I use later.
+This document explains the algorithm to solve supply chain planning
+problem. At first, the problem is defined and then it is formulated by
+a mixed integer linear program. At the end, its complexity is briefly
+discussed.
 
-I refer to the power set of set $P$ as $\pow{P}$, which is the set of all
-subsets of $P$, i.e. $\{P'\mid P'\subseteq P\}$. I use $\dot{\cup}$ for
-disjoint union.
-
-I start with the definition of \emph{supply chain}.
+Throughout this document, the power set of set $P$ is referred to as
+$\pow{P}$, which is the set of all subsets of $P$, i.e. $\{P'\mid
+P'\subseteq P\}$. Disjoint union is denoted by $\dot{\cup}$. The
+definition of \emph{supply chain} is as follows.
 \begin{definition}[Supply Chain]\label{def:sc}
   Let $P$ be a set of \emph{products} with $o:P\to\nat$ as its order
   function such that $o(p)$ is the number of ordered product $p\in
@@ -95,8 +94,8 @@ The optimization version of Prob.~\ref{prob:scp} is defined next.
 &\mathrm{constrains}~\eqref{eq:prod}~\mathrm{to}~\eqref{eq:src}
   \end{align*}
 \end{problem}
-It is straightforward to prove Prob.~\ref{prob:scp} is NP-complete. One can
-easily encode subset sum problem as \SCP{} problem. I also think
-Prob.~\ref{prob:mscp} is NP-hard, but I have no proof for it.
+It is straightforward to prove Prob.~\ref{prob:scp} is
+NP-complete. One can easily encode subset sum problem as \SCP{}
+problem.
 
 \end{document}
