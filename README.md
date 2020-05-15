@@ -3,7 +3,9 @@ Supply Chain Planner
 
 This project solves planning problem on a supply chain graph. The
 chain should be defined in a text file with specific format. This
-document briefly describe how to install and use the planner.
+document briefly describe how to install and use the planner. If you
+need a deeper look into the algorithm used for planning see [this
+document](docs/planning.pdf).
 
 
 ## Prerequisite
