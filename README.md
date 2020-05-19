@@ -20,23 +20,24 @@ PuLP should be enough for test purposes.  PuLP can be installed via
 `pip`, i.e.
 
 ```SHELL
-# pip install pulp
+pip install pulp
 ```
 
 or using `make` (at project root directory):
 
 ```SHELL
-$ make init
+make init
 ```
 
 ## Usage
 The usage of the planner is as follows:
 
 ```SHELL
-$ python planner.py <model> [<lp>]
+python planner.py <model> [<lp>]
 ```
 
-- <model> is the chain described by the input format (see examples).
+- `model` is the chain described by the input format (see examples).
 
-- <lp> is the name of output file containing the mixed linear integer
+- `lp` is the name of output file containing the mixed linear integer
   program corresponding to the model. This argument is optional.
+
