@@ -3,10 +3,14 @@ Supply Chain Planner
 
 This project solves planning problem on a supply chain graph. The
 chain should be defined in a text file with specific format. This
-document briefly describe how to install and use the planner. If you
-need a deeper look into the algorithm used for planning see [this
-document](docs/planning.pdf).
+document briefly describe how to install and use the planner. 
 
+## Method
+
+The planner models a supply chain as a maximum flow problem, which is
+then formulated as a mixed integer linear program and fed into the LP
+solver. If you need a deeper look into the algorithm used for planning
+see [this document](docs/planning.pdf).
 
 ## Prerequisite
 
